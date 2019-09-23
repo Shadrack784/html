@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>React</title>
+
+    <script src="React.js"></script>
+
+    <script src="ReactDOM.js"></script>
+
+    <script src="babel-6.15.0.min.js"></script>
+
+</head>
+
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        const rootElement = document.getElementById("root"); class Counter extends React.Component { constructor(props) { super(props); this.state = { number: 0, luckyNumbers: [], }; this.getLuckyNumber = this.getLuckyNumber.bind(this); this.deleteLuckyNumber
+        = this.deleteLuckyNumber.bind(this); } componentDidMount() { this.intervalId = setInterval(() => this.tick(), 1); } tick() { this.setState(function(prevState) { return { number: prevState.number + 1, } }); } getLuckyNumber() { this.setState(function(prevState)
+        { return { luckyNumbers: prevState.luckyNumbers.concat(prevState.number) } }); } deleteLuckyNumber(currentNumber) { return (event) => { this.setState(function(prevState) { return { luckyNumbers: prevState.luckyNumbers.filter(luckyNumber => luckyNumber
+        !== currentNumber) } }); } } componentWillUnmount() { clearInterval(this.intervalId); } render() { return (
+
+        <div>
+
+            <h2>{this.state.number}</h2>
+
+            <button onClick={this.getLuckyNumber}>Get Lucky Number</button>
+
+            <ul>
+
+                { this.state.luckyNumbers.map((currentNumber, index) => { return (
+
+                <li key={index.toString()}>
+
+                    {currentNumber}
+
+                    <button onClick={this.deleteLuckyNumber(currentNumber)}>X</button>
+
+                </li>
+
+                ) }) }
+
+            </ul>
+
+        </div>
+
+        ); } } function App() { return (
+
+        <Counter /> ); } ReactDOM.render(
+
+
+
+        <App />, rootElement);
+
+    </script>
+
+</body>
+
+</html>
